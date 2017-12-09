@@ -1,8 +1,11 @@
 from textblob import TextBlob
 # from google_npl import GoogleNLP
 from textstat.textstat import textstat
+from google.cloud import language
+
 
 import language_check
+import six
 
 # export GOOGLE_APPLICATION_CREDENTIALS=PATH_TO_KEY_FILE
 
@@ -13,6 +16,11 @@ class EmailStats(object):
         self.string = string
         # self.text_analyzer = GoogleNLP(self.string)
         self.blob = TextBlob(self.string)
+        if isinstance(string, six.binary_type):
+            string = string.decode('utf-8')
+
+        # Create the Google Language API Client
+        self.language_client = language.LanguageServiceClient()
 
     def get_text_easiness(self):
 
@@ -56,6 +64,8 @@ class EmailStats(object):
 string = 'I am happy today'
 myobj = EmailStats(string)
 print(myobj.get_text_easiness())
+# print(myobj.complex_words())
+# print(myobj.subjectivity())
 
 
 

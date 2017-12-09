@@ -12,7 +12,7 @@ class GoogleNLP(object):
         self.text = text
 
         # Create the Google Language API Client
-        self.language_client = language.Client()
+        self.language_client = language.LanguageServiceClient()
 
     def sentiment_text(self):
         """Detects sentiment in the text."""
