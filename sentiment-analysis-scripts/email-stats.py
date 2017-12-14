@@ -50,17 +50,17 @@ class EmailStats(object):
         # score is positivity
         # magnitude is strength of sentence
         return '{}${}'.format(str(tot_score), str(tot_magnitude))
-    
+
     def important_entities(self):
 
         # returns a list with salient words
         return self.text_analyzer.entities_text(self.string)
 
     def complex_words(self):
-        
+
         # returns list of words with multiple syllables
         return textstat.difficult_words(self.string)
-    
+
 string = 'I am happy today'
 myobj = EmailStats(string)
 print(myobj.get_text_easiness())
