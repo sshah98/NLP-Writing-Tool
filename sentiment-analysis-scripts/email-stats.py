@@ -1,11 +1,11 @@
 from textblob import TextBlob
 from google_npl import GoogleNLP
 from textstat.textstat import textstat
-from google.cloud import language
+# from google.cloud import language
 
 
 import language_check
-import six
+# import six
 
 # export GOOGLE_APPLICATION_CREDENTIALS=PATH_TO_KEY_FILE
 
@@ -14,11 +14,11 @@ class EmailStats(object):
     def __init__(self, string):
 
         self.string = string
-        # self.text_analyzer = GoogleNLP(self.string)
+        self.text_analyzer = GoogleNLP(self.string)
         self.blob = TextBlob(self.string)
-        # self.client = language.LanguageServiceClient()
-        if isinstance(string, six.binary_type):
-            string = string.decode('utf-8')
+        # # self.client = language.LanguageServiceClient()
+        # if isinstance(string, six.binary_type):
+        #     string = string.decode('utf-8')
 
         # Create the Google Language API Client
 
@@ -48,12 +48,13 @@ class EmailStats(object):
         # returns words with scores
         # score is positivity
         # magnitude is strength of sentence
-        return '{}${}'.format(str(sentiment.score), str(sentiment.magnitude))
+        return '{} {}'.format(str(tot_score), str(tot_magnitude))
 
     def important_entities(self):
 
+        
         # returns a list with salient words
-        return self.text_analyzer.entities_text(self.string)
+        return self.text_analyzer.entities_text()
 
     def complex_words(self):
 
@@ -64,6 +65,7 @@ string = 'I am happy today'
 myobj = EmailStats(string)
 print(myobj.get_text_easiness())
 print(myobj.total_emotion())
+print(myobj.important_entities())
 # print(myobj.complex_words())
 # print(myobj.subjectivity())
 
