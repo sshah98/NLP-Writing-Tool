@@ -1,7 +1,8 @@
 import six
 
 from google.cloud import language
-
+from google.cloud.language import enums
+from google.cloud.language import types
 
 class GoogleNLP(object):
 
@@ -12,53 +13,56 @@ class GoogleNLP(object):
         self.text = text
 
         # Create the Google Language API Client
-        self.language_client = language.LanguageServiceClient()
+        self.client = language.LanguageServiceClient()
+
+        # Instantiates a plain text document.
+        self.document = types.Document(content=self.text, type=enums.Document.Type.PLAIN_TEXT)
 
     def sentiment_text(self):
+        
         """Detects sentiment in the text."""
-
-        # Instantiates a plain text document.
-        document = self.language_client.document_from_text(self.text)
-
+        
         # Detects sentiment in the document. You can also analyze HTML with:
-        #   document.doc_type == language.Document.HTML
-
-        sentiment = document.analyze_sentiment().sentiment
+        sentiment = self.client.analyze_sentiment(self.document).document_sentiment
 
         return sentiment.score, sentiment.magnitude
-
+            
     def entities_text(self):
         """Detects entities in the text."""
-
-        # Instantiates a plain text document.
-        document = self.language_client.document_from_text(self.text)
-
-        # Detects entities in the document. You can also analyze HTML with:
-        #   document.doc_type == language.Document.HTML
-        entities = document.analyze_entities().entities
-
+        
+        entities = self.client.analyze_entities(self.document).entities
+        
+        # Adjust the the names of the entities - these are the only ones that are available
+        # Each word is associated with one entity_type
+        
+        entity_type = ('UNKNOWN', 'PERSON', 'LOCATION', 'ORGANIZATION',
+                   'EVENT', 'WORK_OF_ART', 'CONSUMER_GOOD', 'OTHER')
+        
         important_words = []
         for entity in entities:
+            
+            important_words.append((entity.name, entity_type[entity.type], entity.salience))
+            
             # print('=' * 20)
-            important_words.append(
-                (entity.name, entity.entity_type, entity.salience))
+            # print(u'{:<16}: {}'.format('name', entity.name))
+            # print(u'{:<16}: {}'.format('type', entity_type[entity.type]))
             # print(u'{:<16}: {}'.format('metadata', entity.metadata))
-            # print(u'{:<16}: {}'.format('wikipedia_url', entity.metadata.get('wikipedia_url', '-')))
-
+            # print(u'{:<16}: {}'.format('salience', entity.salience))
+            # print(u'{:<16}: {}'.format('wikipedia_url',
+            #       entity.metadata.get('wikipedia_url', '-')))
+        
         return important_words
-
     def syntax_text(self):
         """Detects syntax in the text."""
-
-        # Instantiates a plain text document.
-        document = self.language_client.document_from_text(self.text)
-
-        # Detects syntax in the document. You can also analyze HTML with:
-        #   document.doc_type == language.Document.HTML
-        tokens = document.analyze_syntax().tokens
-
+        
+        tokens = self.client.analyze_syntax(self.document).tokens
+        
+        pos_tag = ('UNKNOWN', 'ADJ', 'ADP', 'ADV', 'CONJ', 'DET', 'NOUN', 'NUM',
+               'PRON', 'PRT', 'PUNCT', 'VERB', 'X', 'AFFIX')
         words = []
+        
         for token in tokens:
-            words.append((token.part_of_speech.tag, token.text_content))
-
-        return words
+            words.append((pos_tag[token.part_of_speech.tag],
+                               token.text.content))
+                               
+        return words    

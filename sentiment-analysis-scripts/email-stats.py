@@ -1,5 +1,5 @@
 from textblob import TextBlob
-# from google_npl import GoogleNLP
+from google_npl import GoogleNLP
 from textstat.textstat import textstat
 from google.cloud import language
 
@@ -16,11 +16,11 @@ class EmailStats(object):
         self.string = string
         # self.text_analyzer = GoogleNLP(self.string)
         self.blob = TextBlob(self.string)
+        # self.client = language.LanguageServiceClient()
         if isinstance(string, six.binary_type):
             string = string.decode('utf-8')
 
         # Create the Google Language API Client
-        self.language_client = language.LanguageServiceClient()
 
     def get_text_easiness(self):
 
@@ -43,13 +43,12 @@ class EmailStats(object):
         return self.blob.sentiment.subjectivity
 
     def total_emotion(self):
-
+        
         tot_score, tot_magnitude = self.text_analyzer.sentiment_text()
-
         # returns words with scores
         # score is positivity
         # magnitude is strength of sentence
-        return '{}${}'.format(str(tot_score), str(tot_magnitude))
+        return '{}${}'.format(str(sentiment.score), str(sentiment.magnitude))
 
     def important_entities(self):
 
@@ -64,6 +63,7 @@ class EmailStats(object):
 string = 'I am happy today'
 myobj = EmailStats(string)
 print(myobj.get_text_easiness())
+print(myobj.total_emotion())
 # print(myobj.complex_words())
 # print(myobj.subjectivity())
 
