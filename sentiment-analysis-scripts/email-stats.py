@@ -3,7 +3,6 @@ from google_npl import GoogleNLP
 from textstat.textstat import textstat
 # from google.cloud import language
 
-
 import language_check
 # import six
 
@@ -16,10 +15,6 @@ class EmailStats(object):
         self.string = string
         self.text_analyzer = GoogleNLP(self.string)
         self.blob = TextBlob(self.string)
-        # # self.client = language.LanguageServiceClient()
-        # if isinstance(string, six.binary_type):
-        #     string = string.decode('utf-8')
-
         # Create the Google Language API Client
 
     def get_text_easiness(self):
@@ -52,7 +47,6 @@ class EmailStats(object):
 
     def important_entities(self):
 
-        
         # returns a list with salient words
         return self.text_analyzer.entities_text()
 
@@ -66,8 +60,10 @@ myobj = EmailStats(string)
 print(myobj.get_text_easiness())
 print(myobj.total_emotion())
 print(myobj.important_entities())
-# print(myobj.complex_words())
-# print(myobj.subjectivity())
+print(myobj.complex_words())
+print(myobj.subjectivity())
+print(myobj.word_count())
 
+print(myobj.sentence_count())
 
 

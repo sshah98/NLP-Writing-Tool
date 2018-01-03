@@ -71,10 +71,3 @@ class GoogleNLP(object):
 
         return words
 
-
-string = 'Hello, how are you?'
-myobj = GoogleNLP(string)
-
-
-print(myobj.entities_text())
-
