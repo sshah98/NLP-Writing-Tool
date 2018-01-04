@@ -1,3 +1,7 @@
 myenv/
 sentiment-analysis-scripts/__pycache__
 nlp-analysis-key.json
+__pycache__/
+*.pyc
+*.pyo
+
