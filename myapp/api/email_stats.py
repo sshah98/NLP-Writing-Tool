@@ -1,20 +1,15 @@
 from textblob import TextBlob
-from google_npl import GoogleNLP
+# from . import google_npl
 from textstat.textstat import textstat
 
 import language_check
-
-# export GOOGLE_APPLICATION_CREDENTIALS=PATH_TO_KEY_FILE
-
 
 class EmailStats(object):
 
     def __init__(self, string):
 
         self.string = string
-        self.text_analyzer = GoogleNLP(self.string)
         self.blob = TextBlob(self.string)
-        # Create the Google Language API Client
 
     def get_text_easiness(self):
 
@@ -34,20 +29,7 @@ class EmailStats(object):
     def subjectivity(self):
 
         # returns integer
-        return self.blob.sentiment.subjectivity
-
-    def total_emotion(self):
-
-        tot_score, tot_magnitude = self.text_analyzer.sentiment_text()
-        # returns words with scores
-        # score is positivity
-        # magnitude is strength of sentence
-        return '{} {}'.format(str(tot_score), str(tot_magnitude))
-
-    def important_entities(self):
-
-        # returns a list with salient words
-        return self.text_analyzer.entities_text()
+        return float(round(self.blob.sentiment.subjectivity, 4)) * 100.0
 
     def complex_words(self):
 

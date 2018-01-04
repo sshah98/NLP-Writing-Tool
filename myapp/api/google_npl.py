@@ -4,6 +4,7 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 
+# export GOOGLE_APPLICATION_CREDENTIALS=PATH_TO_KEY_FILE
 
 class GoogleNLP(object):
 
@@ -27,7 +28,8 @@ class GoogleNLP(object):
         sentiment = self.client.analyze_sentiment(
             self.document).document_sentiment
 
-        return sentiment.score, sentiment.magnitude
+        # return sentiment.score, sentiment.magnitude
+        return '{} {}'.format(str(sentiment.score), str(sentiment.magnitude))
 
     def entities_text(self):
         """Detects entities in the text."""
@@ -45,14 +47,6 @@ class GoogleNLP(object):
 
             important_words.append(
                 (entity.name, entity_type[entity.type], entity.salience))
-
-            # print('=' * 20)
-            # print(u'{:<16}: {}'.format('name', entity.name))
-            # print(u'{:<16}: {}'.format('type', entity_type[entity.type]))
-            # print(u'{:<16}: {}'.format('metadata', entity.metadata))
-            # print(u'{:<16}: {}'.format('salience', entity.salience))
-            # print(u'{:<16}: {}'.format('wikipedia_url',
-            #       entity.metadata.get('wikipedia_url', '-')))
 
         return important_words
 
