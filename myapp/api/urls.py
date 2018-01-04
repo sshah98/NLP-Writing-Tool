@@ -8,5 +8,4 @@ urlpatterns = [
     path('google-stats/', views.google, name='google'),
     path('string-stats/', views.string_stats, name='string_stats'),
     
-    
 ]
