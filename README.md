@@ -1,10 +1,5 @@
 # Sentiment analysis for emails. Used by a chrome extension
 
-## Will continuously update
-
-###Left off at making a django rest api for the email-stats
-###Will then follow up with connecting it to a chrome extension
-
 
 ### To use, download/clone files
 Install using pip install -r requirements.txt
@@ -30,3 +25,7 @@ nltk.download()
 
 
 ### once inside the gui, download "punkt" model in "models"
+
+### to use chrome extension:
+clone github repository
+go to google chrome, "load unpacked extenstion", load "ext"
