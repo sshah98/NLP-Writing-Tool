@@ -12,6 +12,7 @@ chrome.extension.onMessage.addListener(
     chrome.pageAction.show(sender.tab.id);
   });
 
+
 chrome.extension.onRequest.addListener(
   function(request, sender, sendResponse) {
     //chrome.tabs.create({url:"src/bg/background.html"});
@@ -19,8 +20,8 @@ chrome.extension.onRequest.addListener(
       "from a content script:" + sender.tab.url :
       "from the extension");
     if (request.type == "Call1") {
-      sentencecount(request.Total_Sentences);
-      wordcount(request.Total_Words);
+      document.getElementById('totalWords').innerHTML = request.Total_Words;
+      document.getElementById('totalSentence').innerHTML = request.Total_Sentences;
 
       sendResponse({
         farewell: "goodbye"
