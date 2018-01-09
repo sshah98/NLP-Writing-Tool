@@ -32,14 +32,8 @@ chrome.extension.onRequest.addListener(
         });
 
         else if (request.type == "Call2") {
-             	document.getElementById('sentiment').innerHTML = request.Sentiment_Score;
-          
+          document.getElementById('sentiment').innerHTML = request.Sentiment_Score;
+
         } else
           sendResponse({}); // snub them.
       });
-      
-      
-      
-      
-      
-      
