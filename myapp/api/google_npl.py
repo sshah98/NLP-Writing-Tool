@@ -29,7 +29,7 @@ class GoogleNLP(object):
             self.document).document_sentiment
 
         # return sentiment.score, sentiment.magnitude
-        return '{} {}'.format(str(sentiment.score), str(sentiment.magnitude))
+        return '{} {}'.format(round(sentiment.score, 3), round(sentiment.magnitude, 3))
 
     def entities_text(self):
         """Detects entities in the text."""
