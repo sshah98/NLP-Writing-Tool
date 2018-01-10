@@ -15,8 +15,6 @@ function myAction(input) {
   // you need to right click the extension icon and choose "inspect popup"
   // to view the messages appearing on the console.
 
-
-
   $.ajax({
     url: 'http://localhost:8000/api/string-stats/?string=',
     type: 'GET',
@@ -27,19 +25,23 @@ function myAction(input) {
     dataType: 'json',
     xhrFields: {
       withCredentials: true
-    },
-    success: function(data) {
-      // When AJAX call is successfuly
-      console.log('AJAX call successful.');
-      console.log(data);
-      document.getElementById("totwords").value = data.Total_Words;
-      document.getElementById("totsentences").value = data.Total_Sentences;
-      document.getElementById("complexwords").value = data.Total_Complex_Words;
-      document.getElementById("readinglvl").value = data.Easiness;
-      document.getElementById("subjective").value = data.Subjectivity;
-
     }
+  }).done(function(data) {
+    // When AJAX call is successfuly
+    console.log('AJAX call successful.');
+    console.log(data);
+    document.getElementById("totwords").value = data.Total_Words;
+    document.getElementById("totsentences").value = data.Total_Sentences;
+    document.getElementById("complexwords").value = data.Total_Complex_Words;
+    document.getElementById("readinglvl").value = data.Easiness;
+    document.getElementById("subjective").value = data.Subjectivity;
+
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    // When AJAX call has failed
+    console.log('AJAX call failed.');
+    console.log(textStatus + ': ' + errorThrown);
   });
+
 
   $.ajax({
     url: 'http://localhost:8000/api/google-stats/?string=',
@@ -51,26 +53,31 @@ function myAction(input) {
     dataType: 'json',
     xhrFields: {
       withCredentials: true
-    },
-    success: function(data) {
-      // When AJAX call is successfuly
-      console.log('AJAX call successful.');
-      console.log(data);
-      var sentiment = data.Sentiment_Score;
-      var arr = sentiment.split(" ");
-      document.getElementById("sentiment").value = arr[0];
-
     }
+  }).done(function(data) {
+    // When AJAX call is successfuly
+    console.log('AJAX call successful.');
+    console.log(data);
+    var sentiment = data.Sentiment_Score;
+    var arr = sentiment.split(" ");
+    document.getElementById("sentiment").value = arr[0];
+
+  }).fail(function(jqXHR, textStatus, errorThrown) {
+    // When AJAX call has failed
+    console.log('AJAX call failed.');
+    console.log(textStatus + ': ' + errorThrown);
+    alert("Error! Please try again later");
   });
-
-
 }
 
 function documentEvents() {
-  document.getElementById('ok_btn').addEventListener('click',
-    function() {
-      myAction(document.getElementById('inputText'));
-    });
-
+  try {
+    document.getElementById('ok_btn').addEventListener('click',
+      function() {
+        myAction(document.getElementById('inputText'));
+      });
+  } catch (error) {
+    alert("Something went wrong: " + error)
+  }
   // you can add listeners for other objects ( like other buttons ) here 
 }
