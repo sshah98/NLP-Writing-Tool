@@ -29,7 +29,8 @@ class EmailStats(object):
     def subjectivity(self):
 
         # returns integer
-        return float(round(self.blob.sentiment.subjectivity, 4)) * 100.0
+        # return "{:.1f}".format(self.blob.sentiment.subjectivity)
+        return float(round(self.blob.sentiment.subjectivity, 2)) * 100.0
 
     def complex_words(self):
 

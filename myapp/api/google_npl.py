@@ -3,8 +3,11 @@ import six
 from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
+import os
 
-# export GOOGLE_APPLICATION_CREDENTIALS=PATH_TO_KEY_FILE
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/suraj/Documents/Programming/current-projects/Email-NLP/nlp-analysis-key.json"
+
+# export GOOGLE_APPLICATION_CREDENTIALS=PATH_TO_KEY_FILE (for terminal)
 
 class GoogleNLP(object):
 
