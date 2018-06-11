@@ -212,3 +212,17 @@ venv.bak/
 
 
 
+
+# Created by https://www.gitignore.io/api/database
+
+### Database ###
+*.accdb
+*.db
+*.dbf
+*.mdb
+*.pdb
+*.sql
+*.sqlite3
+
+
+# End of https://www.gitignore.io/api/database
