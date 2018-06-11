@@ -6,6 +6,7 @@ from google.cloud.language import types
 import os
 
 
+
 class GoogleNLP(object):
 
     def __init__(self, text):
@@ -64,7 +65,3 @@ class GoogleNLP(object):
                           token.text.content))
 
         return words
-
-
-myobj = GoogleNLP('Hello')
-print(myobj.sentiment_text())
