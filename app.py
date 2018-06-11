@@ -19,9 +19,9 @@ db = SQLAlchemy(app)
 
 # Automatically tear down SQLAlchemy.
 
-@app.teardown_request
-def shutdown_session(exception=None):
-    db_session.remove()
+# @app.teardown_request
+# def shutdown_session(exception=None):
+#     db_session.remove()
 
 
 # Login required decorator.
@@ -73,7 +73,7 @@ def forgot():
 
 @app.errorhandler(500)
 def internal_error(error):
-    #db_session.rollback()
+    db_session.rollback()
     return render_template('errors/500.html'), 500
 
 
