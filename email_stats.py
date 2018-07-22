@@ -1,5 +1,4 @@
 from textblob import TextBlob
-# from . import google_npl
 from textstat.textstat import textstat
 
 class EmailStats(object):
