@@ -1,9 +1,8 @@
 import six
+import os
 
 from google.cloud import language
-from google.cloud.language import enums
-from google.cloud.language import types
-import os
+from google.cloud.language import enums, types
 
 
 class GoogleNLP(object):
@@ -64,7 +63,3 @@ class GoogleNLP(object):
                           token.text.content))
 
         return words
-
-
-myobj = GoogleNLP('Hello')
-print(myobj.sentiment_text())
