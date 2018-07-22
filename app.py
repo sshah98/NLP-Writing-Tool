@@ -4,6 +4,7 @@ from flask import Flask, url_for, render_template, request, redirect, session, M
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
+app.secret_key = 'random-key'
 
 from google_npl import GoogleNLP
 from email_stats import EmailStats
@@ -22,18 +23,15 @@ def index():
             sentence_count = EmailStats(user_text).sentence_count()
             subjectivity = EmailStats(user_text).subjectivity()
             complex_words = EmailStats(user_text).complex_words()
-            # print(sentiment)
             sentiment = GoogleNLP(user_text).sentiment_text()
             sentiment_score, sentiment_mag = sentiment.split(' ')
-            
-            
-        
+
             return render_template('index.html', results=[('Word Count', word_count), ('Sentence Count', sentence_count), ('Readability', get_text_easiness), ('Subjectivity', subjectivity), ('Complex Words', complex_words), ('Sentiment Score', sentiment_score), ('Sentiment Strength', sentiment_mag)])
-        
+
         except:
             flash('Error')
             return render_template('index.html')
-        
+
     return render_template('index.html')
 
 
