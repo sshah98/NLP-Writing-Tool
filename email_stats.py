@@ -2,8 +2,6 @@ from textblob import TextBlob
 # from . import google_npl
 from textstat.textstat import textstat
 
-import language_check
-
 class EmailStats(object):
 
     def __init__(self, string):
