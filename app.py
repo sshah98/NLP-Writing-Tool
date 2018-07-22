@@ -28,8 +28,8 @@ def index():
 
             return render_template('index.html', results=[('Word Count', word_count), ('Sentence Count', sentence_count), ('Readability', get_text_easiness), ('Subjectivity', subjectivity), ('Complex Words', complex_words), ('Sentiment Score', sentiment_score), ('Sentiment Strength', sentiment_mag)])
 
-        except:
-            flash('Error')
+        except Exception as e:
+            flash('Error', e)
             return render_template('index.html')
 
     return render_template('index.html')
