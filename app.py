@@ -25,6 +25,8 @@ def index():
             complex_words = EmailStats(user_text).complex_words()
             sentiment = GoogleNLP(user_text).sentiment_text()
             sentiment_score, sentiment_mag = sentiment.split(' ')
+            
+            print(word_count, get_text_easiness, sentence_count, subjectivity, complex_words, sentiment_score, sentiment_mag)
 
             return render_template('index.html', results=[('Word Count', word_count), ('Sentence Count', sentence_count), ('Readability', get_text_easiness), ('Subjectivity', subjectivity), ('Complex Words', complex_words), ('Sentiment Score', sentiment_score), ('Sentiment Strength', sentiment_mag)])
 
