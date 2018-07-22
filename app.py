@@ -1,7 +1,5 @@
 import os
 from flask import Flask, url_for, render_template, request, redirect, session, Markup
-from flask_sqlalchemy import SQLAlchemy
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
