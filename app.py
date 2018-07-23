@@ -3,7 +3,7 @@ from flask import Flask, url_for, render_template, request, redirect, session, M
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "nlp-analysis-key.json"
 app.secret_key = 'random-key'
 
 from google_npl import GoogleNLP
