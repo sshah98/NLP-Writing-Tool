@@ -15,24 +15,30 @@ def index():
 
     if request.method == "POST":
 
-        try:
-
-            user_text = request.form['writing']
-            word_count = EmailStats(user_text).word_count()
-            get_text_easiness = EmailStats(user_text).get_text_easiness()
-            sentence_count = EmailStats(user_text).sentence_count()
-            subjectivity = EmailStats(user_text).subjectivity()
-            complex_words = EmailStats(user_text).complex_words()
-            sentiment = GoogleNLP(user_text).sentiment_text()
-            sentiment_score, sentiment_mag = sentiment.split(' ')
-            
-            print(word_count, get_text_easiness, sentence_count, subjectivity, complex_words, sentiment_score, sentiment_mag)
-
-            return render_template('index.html', results=[('Word Count', word_count), ('Sentence Count', sentence_count), ('Readability', get_text_easiness), ('Subjectivity', subjectivity), ('Complex Words', complex_words), ('Sentiment Score', sentiment_score), ('Sentiment Strength', sentiment_mag)])
-
-        except Exception as e:
-            flash('Error', e)
+        if not request.form['writing']:
             return render_template('index.html')
+        else:
+                
+            try:
+            
+                user_text = request.form['writing']
+                word_count = EmailStats(user_text).word_count()
+                get_text_easiness = EmailStats(user_text).get_text_easiness()
+                sentence_count = EmailStats(user_text).sentence_count()
+                subjectivity = EmailStats(user_text).subjectivity()
+                complex_words = EmailStats(user_text).complex_words()
+                sentiment = GoogleNLP(user_text).sentiment_text()
+                sentiment_score, sentiment_mag = sentiment.split(' ')
+                
+                print(word_count, get_text_easiness, sentence_count, subjectivity, complex_words, sentiment_score, sentiment_mag)
+                
+                return render_template('index.html', results=[('Word Count', word_count), ('Sentence Count', sentence_count), ('Readability', get_text_easiness), ('Subjectivity', subjectivity), ('Complex Words', complex_words), ('Sentiment Score', sentiment_score), ('Sentiment Strength', sentiment_mag)])
+
+            except Exception as e:
+                flash('Error', e)
+                return render_template('index.html')
+            
+
 
     return render_template('index.html')
 
