@@ -1,6 +1,6 @@
 3to2==1.1.1
 cachetools==2.1.0
-certifi==2018.4.16
+certifi==2018.8.24
 chardet==3.0.4
 click==6.7
 Flask==1.0.2
